@@ -1,0 +1,39 @@
+/* 모던 TOC 카드 스타일 */
+.markdown-preview-view .toc {
+  background: var(--background-secondary);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 12px;
+  padding: 20px;
+  margin: 20px 0;
+  box-shadow: var(--shadow-s);
+  font-size: 0.95em;
+}
+
+.markdown-preview-view .toc ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.markdown-preview-view .toc li {
+  margin: 8px 0;
+  padding-left: 4px;
+}
+
+.markdown-preview-view .toc a {
+  color: var(--text-normal);
+  text-decoration: none;
+  transition: color 0.2s;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+
+.markdown-preview-view .toc a:hover {
+  color: var(--text-accent);
+  background: var(--background-modifier-hover);
+}
+
+/* 번호 매기기 스타일일 때 들여쓰기 */
+.markdown-preview-view .toc ol {
+  padding-left: 20px;
+}

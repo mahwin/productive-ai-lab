@@ -1,0 +1,62 @@
+{
+  "title": "Ducky Keyboard Rules (F12 + Caps Lock Fix)",
+  "rules": [
+    {
+      "description": "Volume Increment → F12",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "consumer_key_code": "volume_increment"
+          },
+          "to": [
+            {
+              "key_code": "f12"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "Left Shift + Caps Lock → Page Down",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "caps_lock",
+            "modifiers": {
+              "mandatory": ["left_shift"],
+              "optional": ["any"]
+            }
+          },
+          "to": [
+            {
+              "key_code": "page_down"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "Right Shift + Caps Lock → Left Command + Mission Control",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "caps_lock",
+            "modifiers": {
+              "mandatory": ["right_shift"],
+              "optional": ["any"]
+            }
+          },
+          "to": [
+            {
+              "apple_vendor_keyboard_key_code": "mission_control",
+              "modifiers": ["left_command"]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

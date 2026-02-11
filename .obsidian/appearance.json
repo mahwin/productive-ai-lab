@@ -1,0 +1,7 @@
+{
+  "cssTheme": "Things",
+  "theme": "system",
+  "enabledCssSnippets": [
+    "toc-custom"
+  ]
+}
