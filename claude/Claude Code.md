@@ -61,3 +61,36 @@
 - `Escape` + `Escape` 로 특정 시점을 기준으로 **컨텍스트를 되돌**릴 수 있다.
 - `/compact` 현재 대화의 모든 메시지를 가져와 **요약**한다.
 - `/clear` 전체 대화 기록을 **삭제**한다.
+
+## Custom Command
+- Claude Code에는 기본 내장 명령어와 **사용자 명령어**로 구성된다.
+- .claude/commands/custom_command_name.md 라는 구조로 사용자 명령어를 추가할 수 있다.
+- `cusom_command_name.md`
+	- 파일명(`/cusom_command_name`)으로 사용자 명령어를 호출할 수 있다.
+	- 자연어로 업무에 대한 지시를 작성할 수 있다.
+	- $ 기호로 매개변수를 전달할 수 있다
+		- /copy_file.md 파일
+		- ```md
+			You are a coding agent.
+			The user passed arguments:
+		
+			$ARGUMENTS
+			Split arguments by space:
+			- first argument = source file path
+			- second argument = new file name			
+			Copy the file and create a new file in the same directory
+			with the new name.
+			Do not modify original file content.
+			```
+		- `/copy_file src/components/Card.vue NewCard.vue`
+
+## MCP Server
+- MCP 서버를 사용하면 Cloud Code에 새로운 도구와 기능을 추가할 수 있다.
+- Playwright MCP Server를 추가해보자.
+	- Playwright MCP Server:  Claude Code에게 브라우저 제어 기능을 부여할 수 있다.
+	- 설치: bash `claude mcp add playwright npx @playwright/mcp@latest`
+	- 실행: claude 접속 후 자연어로 호출
+		- Open the browser and navigate to localhost:3000
+- MCP 서버는 다양한 기능을 제공하기 때문에 프로젝트에 도움이 될 수 있는 MCP 서버를 최대한 살펴보는 것이 좋다.
+
+ 
