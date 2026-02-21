@@ -20,8 +20,77 @@
               "icon": "lucide-file",
               "title": "Claude Code"
             }
+          },
+          {
+            "id": "45ef8dc8e35e0ad6",
+            "type": "leaf",
+            "state": {
+              "type": "image",
+              "state": {
+                "file": "images/claude/Claude_Code의_문제접근방식.png"
+              },
+              "icon": "lucide-image",
+              "title": "Claude_Code의_문제접근방식"
+            }
+          },
+          {
+            "id": "9579ceb94560d314",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "OpenClaw/OpenClaw 기초.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "OpenClaw 기초"
+            }
+          },
+          {
+            "id": "422ad42d35d2c586",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "OpenClaw/OpenClaw Channels.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "OpenClaw Channels"
+            }
+          },
+          {
+            "id": "0a4764387670dab3",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "OpenClaw/OpenClaw Agent.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "OpenClaw Agent"
+            }
+          },
+          {
+            "id": "b4d689b51d4da34a",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "OpenClaw/OpenClaw Agent Loop.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "OpenClaw Agent Loop"
+            }
           }
-        ]
+        ],
+        "currentTab": 5
       }
     ],
     "direction": "vertical"
@@ -161,13 +230,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "무제.md",
+                "file": "OpenClaw/OpenClaw Agent Loop.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "무제 의 개요"
+              "title": "OpenClaw Agent Loop 의 개요"
             }
           }
         ],
@@ -208,13 +277,26 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "ee02c81949f85b44",
+  "active": "b4d689b51d4da34a",
   "lastOpenFiles": [
+    "OpenClaw/OpenClaw Agent.md",
+    "OpenClaw/OpenClaw Gateway Architecture.md",
+    "OpenClaw/OpenClaw Channels.md",
+    "OpenClaw/OpenClaw Agent Loop.md",
+    "OpenClaw/OpenClaw 기초.md",
+    "OpenClaw/OpenClaw  Gateway Architecture.md",
     "claude/Claude Code.md",
+    "images/claude/Claude_Code의_문제접근방식.png",
+    "images/OpenClaw/OpenClaw의 작업 순서도.md",
+    "images/OpenClaw/OpenClaw의_작업_순서도.png",
+    "images/OpenClaw",
+    "Attached file/스크린샷 2026-02-14 오전 10.37.12.png",
+    "Attached file",
+    "OpenClaw",
     "무제.md",
+    "README.md",
     "claude/Claude.ai.md",
     "images/claude/Claude_Code의_문제접근방식.md",
-    "images/claude/Claude_Code의_문제접근방식.png",
     "README.md.md",
     "imges/claude/Claude_Code의_문제접근방식.md",
     "imges/claude/Cl.md",
@@ -224,14 +306,11 @@
     "claude/무제 1.base",
     "images/claude",
     "무제 1",
-    "무제",
     "images",
     "무제 1.md",
     "2025-08-15.md",
     "옵시디언 사용법.md",
     "마크다운 사용법.md",
-    "Attached file/스크린샷 2025-08-15 오후 12.21.00.png",
-    "Attached file",
-    "1.Daily"
+    "Attached file/스크린샷 2025-08-15 오후 12.21.00.png"
   ]
 }

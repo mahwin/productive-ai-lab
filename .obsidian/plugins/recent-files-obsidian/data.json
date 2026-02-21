@@ -1,16 +1,36 @@
 {
   "recentFiles": [
     {
+      "basename": "OpenClaw Agent Loop",
+      "path": "OpenClaw/OpenClaw Agent Loop.md"
+    },
+    {
+      "basename": "OpenClaw Agent",
+      "path": "OpenClaw/OpenClaw Agent.md"
+    },
+    {
+      "basename": "OpenClaw Gateway Architecture",
+      "path": "OpenClaw/OpenClaw Gateway Architecture.md"
+    },
+    {
+      "basename": "OpenClaw Channels",
+      "path": "OpenClaw/OpenClaw Channels.md"
+    },
+    {
+      "basename": "OpenClaw 기초",
+      "path": "OpenClaw/OpenClaw 기초.md"
+    },
+    {
       "basename": "Claude Code",
       "path": "claude/Claude Code.md"
     },
     {
-      "basename": "Claude.ai",
-      "path": "claude/Claude.ai.md"
-    },
-    {
       "basename": "Claude_Code의_문제접근방식",
       "path": "images/claude/Claude_Code의_문제접근방식.png"
+    },
+    {
+      "basename": "Claude.ai",
+      "path": "claude/Claude.ai.md"
     },
     {
       "basename": "무제 1",
