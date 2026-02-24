@@ -61,3 +61,98 @@
 - Edit이나 Write 후에 네이밍 컨벤션이나 코딩 표준 체크하기
 
 > [!tip] 훅을 통해 내장 도구와 프로세스를 워크플로우에 통합함으로써 Claude Code의 기능을 확장
+
+## ## Building a Hook
+1. Decide on a PreToolUse or PostToolUse hook
+2. Determine **which type of tool calls** you want to watch for
+	- 모든 도구의 이름을 기억하기에는 무리가 있다.
+	- Claude에게 직접 접근할 수 있는 도구 리스트를 반환 받을 수 있다.
+		- ex) List out the names of all the tools you have access to, buillet point list;
+3. Write a command that will receive the tool call
+	- command 로직에는 standard input으로 호출 관련 메타데이터가 들어오며 이를 이용하여 작업을 수행할 수 있다.
+	- ```json
+	  { "session_id": "2d6a1e4d-6...",
+	    "transcript_path": "/Users/sg/...",
+	    "hook_event_name": "PreToolUse",
+	    "tool_name": "Read",
+	    "tool_input": { "file_path": "/code/queries/.env" } 
+	  }
+	  ```
+	- ```javascript
+	  (async function main(){
+	    const chunks = [];
+		
+		for await (const chunk of process.stdin) {
+		  chunks.push(chunk);
+		}
+		
+		const toolArgs = JSON.parse(Buffer.concat(chunks).toString());
+		
+		const readPath = 
+		toolArgs.tool_input?.file_path 
+		|| toolArgs.tool_input?.path 
+		|| "";
+		
+		if (readPath.includes(".env")) {
+			process.exit(2); // Code 2
+		}
+	  })()
+	  ```
+	  - Exit Code 0 - Everything is fine
+	  - Exit Code 2 - Block the tool call
+
+## Gotchas around hooks
+- 보안상의 이유로 반드시 **절대 경로**를 사용할 것을 강력히 권고한다.
+- 하지만, 절대 경로를 적어버리면 공유할 수 없다.
+- $PWD 기호와 자동 변환 스크립트를 사용하여 해결할 수 있다.
+
+### 절대경로 공유하기
+1. settings.example.json이라는 껍데기 파일을 만들고 경로 자리에 진짜 주소 대신 식별자($PWD)를 넣기
+2. 자동화 스크립트 실행 (npm run setup : npm install && node ./scripts/init-claude.js)
+3. 식별자($PWD) 유저 경로로 변환하기
+4. settings.local.json으로 copy 하기
+- ./script/init-claude.js
+```javascript
+const pwd = process.cwd();
+
+const templatePath = path.join(".claude", "settings.example.json");
+const outputPath = path.join(".claude", "settings.local.json");
+
+const templateContent = fs.readFileSync(templatePath, "utf8");
+const processedContent = templateContent.replace(/\$PWD/g, pwd);
+
+JSON.parse(processedContent);
+const claudeDir = path.dirname(outputPath);
+
+if (!fs.existsSync(claudeDir)) {
+  fs.mkdirSync(claudeDir, { recursive: true });
+}
+
+// Write the processed content to settings.json
+fs.writeFileSync(outputPath, processedContent, "utf8");
+```
+
+## Useful hooks!
+- 훅을 사용하면 AI-assisted development의 **약점을 개선**할 수 있다.
+- 훅은 Claude가 코드를 수정할 때 자동으로 실행되어 즉각적인 피드백을 제공한다.
+
+### TypeScript Type Checking hook
+- Claude가 function signiture를 수정할 때, 프로젝트 전체에서 해당 함수가 호출되는 모든 파일을 업데이트하지 않는 경우가 있다.
+- Edit의 PostToolUse 훅으로 tsc --noEmit의 실행 결과를 다시 클로드에게 전달하고 수정하도록 하는 것은 매우 유용한 hook 사용법 중 하나이다.
+ - ```json
+   "PostToolUse": [
+     "matcher":"Edit",
+     "hooks":[
+       {
+         "type":"command",
+         "command": "node ./hooks/tsc.js"
+       }
+     ]
+   ]
+   ```
+- /hooks/tsc.js 로직
+	1. stdin 데이터 json으로 변환하기
+	2. tsconfig.json 파일 읽고, 프로그램에 맞춰 parse 하기
+	3. 실행 프로그램 생성
+	4. 실행 결과 가져오기
+	5. 결과 확인 후 필요하다면 결과 stdout로 보내며, Code 2를 Exit하여 클로드에게 알리기
