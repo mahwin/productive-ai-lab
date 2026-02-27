@@ -156,3 +156,97 @@ fs.writeFileSync(outputPath, processedContent, "utf8");
 	3. 실행 프로그램 생성
 	4. 실행 결과 가져오기
 	5. 결과 확인 후 필요하다면 결과 stdout로 보내며, Code 2를 Exit하여 클로드에게 알리기
+
+## Another useful hook
+- PreToolUse, PostToolUse 이외에도 유용한 여러 hook이 존재한다.
+- Notification
+	- Claude needs a permission to use a tool
+	- 비활성 상태 60초 유지시
+- Stop
+	- 클로드 코드가 응답을 완료했을 때 실행됨
+- SubagentStop
+	- 서브 에이전트가 작업을 끝냈을 때
+- PreCompact
+	- 컴팩트 작업이 발생하기 전에
+- UserPromptSubmit
+	- 유저가 프롬프트를 제출했을 때
+- SessionStart
+	- 세션이 시작될 때
+- SessionEnd
+	- 세션이 종료될 때
+
+> [!note] 호출되는 훅의 종류에 따라 명령어에 대한 표 입력이 다르다!
+> 
+- TodoWrite에 대한 PostToolUse
+```json
+{ "session_id": "9ecf22fa-edf8-4332-ae85-b6d5456eda64",
+  "transcript_path": "<path_to_transcript>",
+  "hook_event_name": "PostToolUse", 
+  "tool_name": "TodoWrite",
+  "tool_input": 
+    { "todos": 
+      [{ "content": "write a readme", "status": "pending", "priority": "medium", "id": "1" }] 
+    },
+    
+  "tool_response": { 
+    "oldTodos": [], 
+    "newTodos": 
+      [{ "content": "write a readme", "status": "pending", "priority": "medium", "id": "1" }] 
+  } 
+}
+```
+- TodoWrite에 대한 Stop
+```json
+{  
+	"session_id": "af9f50b6-f042-4773-b3e2-c3a4814765ce",
+	"transcript_path": "<path_to_transcript>",
+	"hook_event_name": "Stop",
+	"stop_hook_active": false 
+}
+```
+- 사용하는 훅과 매처에 따라 표준 입력이 달라지기 때문에 훅 작성이 까다로울 수 있다.
+- 아래 헬퍼를 사용하여 특정 훅이 어떤 형식의 표준입력을 받는지 확인할 수 있다.
+```json
+"PostToolUse": [ // Or "PreToolUse" or "Stop", etc 
+  { 
+    "matcher": "*",
+    "hooks": [ 
+	  { 
+	    "type": "command", 
+	    "command": "jq . > post-log.json" 
+	  } 
+    ],
+  }, 
+]
+```
+- 위 명령어는 이 후크에 입력된 내용을 post-log.json 파일에 기록하기 때문에 어떤 표준입력이 들어오는지 눈으로 확인할 수 있음.
+
+## Claude Code SDK
+- Cladue Code SDK를 사용하면 자체 어플리케이션 및 스크립트 내에서 Cladue Code를 프로그래밍 방식으로 실행할 수 있다.
+	- TypeScript, Python, CLI를 통해 제공
+- 터미널에서 사용하는 것과 동일한 Cladue Code 기능을 더 큰 워크플로에 통합하여 사용할 수 있다.
+### Basic Usage Claude Code SDK
+```json
+import { query } from "@anthropic-ai/claude-code";
+
+const prompt = "질문 내용"
+
+for await (const message of query({
+	propmt,
+	options: { 
+		allowedTools: ["Edit"] // <- 허용할 도구 
+	} 
+})) {	
+	console.log(JSON.stringify(message, null, 2));
+
+}
+```
+- 기본적으로 Read만 허용하기 때문에 options으로 허용 도구를 설정
+- 또는 .claude 디렉토리 내 설정 파일에서 프로젝트 전체 접근 권한을 구성할 수 있음
+### 실질적인 사용 예시
+- git hooks that automatically review code changes
+- Build scripts that analyze and optimize code
+- Helper commands for code maintenance tasks
+	- run lint, run test, ... 등의 일련의 작업을 수행하고 결과를 받아 다시 edit 하는 식으로 가능.
+- Automated documentation generation
+- Code quality checks in CI/CD pipelines
