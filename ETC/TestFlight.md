@@ -1,0 +1,12 @@
+- 애플에서 제공하는 **베타 테스트 서비스**
+- App Store에 정식 출시하기 전에 베타 버전으로 미리 돌려보고 버그 잡고 피드백 받는 툴
+- 크래시, 버그, UI 문제 등을 미리 발견 가능
+	- 크래시: 앱이 멈추거나 강제 종료되는 현상
+## 동작 방식
+- App Store Connect에서 Test Information 입력
+- Xcode에서 Archive 후 App Sotre Connect 선택하여 upload
+- 업로드 후 Apple 서버에서 자동 처리
+- App Sotre Connect -> TesfFlight 탭 -> Builds에 자동 등록
+- 테스터 초대 (이메일 or 공개 링크)
+- 테스터 TestFlight 앱 설치
+- 초대 수락 -> 베타 앱 자동 설치 & 사용
